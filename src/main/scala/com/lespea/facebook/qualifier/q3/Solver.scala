@@ -11,7 +11,7 @@ final object Solver {
 
   def solveProblem(uri: URI): Seq[SolvedProblem] =
     getProblems(Source.fromURI(uri)).zipWithIndex.map {
-      case (p: String, i: Int) ⇒ Problem(i, p)
+      case (p: String, i: Int) ⇒ Problem(i + 1, p)
     }.toList.par.map(Solver.solve).toList
 
   def getProblems(file: BufferedSource) =

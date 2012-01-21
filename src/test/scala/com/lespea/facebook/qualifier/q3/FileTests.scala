@@ -13,7 +13,7 @@ final class FileTests extends WordSpec with MustMatchers {
 
   val wanted = answerMap.zipWithIndex.map {
     case (e, i) ⇒
-      (SolvedProblem(i, e._1, e._2), "Case #" + i + ": " + e._2)
+      (SolvedProblem(i + 1, e._1, e._2), "Case #" + (i + 1) + ": " + e._2)
   }
 
   val sampleFile = this.getClass.getClassLoader.getResource("givenProblems.txt")
