@@ -34,6 +34,6 @@ final object Solver {
       }
     }
 
-    SolvedProblem(p, if (counts.isEmpty) 0 else counts.values.min.toInt)
+    SolvedProblem(p, if (counts.isEmpty || counts.size != 8) 0 else counts.values.min.toInt)
   }
 }
