@@ -2,8 +2,21 @@ package com.lespea.facebook.qualifier.q3
 
 import scala.annotation.switch
 import scala.collection.mutable.HashMap
+import scala.io.{ BufferedSource, Source }
+import java.net.URI
 
 final object Solver {
+  def solveProblem(problemSource: String): Seq[SolvedProblem] =
+    solveProblem(new URI(problemSource))
+
+  def solveProblem(uri: URI): Seq[SolvedProblem] =
+    getProblems(Source.fromURI(uri)).zipWithIndex.map {
+      case (p: String, i: Int) ⇒ Problem(i, p)
+    }.toList.par.map(Solver.solve).toList
+
+  def getProblems(file: BufferedSource) =
+    file.getLines.drop(1)
+
   def solve(p: Problem): SolvedProblem = {
     val counts = HashMap[Char, Double]()
 
