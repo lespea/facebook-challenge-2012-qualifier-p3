@@ -36,6 +36,30 @@
 
 package com.lespea.facebook.qualifier.q3
 
+import scala.util.matching.Regex
+import java.io.FileWriter
+import java.io.File
+
 final object Run extends App {
-  println("Stub")
+  if (args.length < 1)
+    throw new RuntimeException("You must provide at least 1 argument as a problem source")
+
+  val parser = """^(.+)(\.[^.]+)$""".r
+  args.par foreach { f ⇒
+    val out = try {
+      val filename = parser.findFirstMatchIn(f) match {
+        case Some(m) ⇒ m.group(1) + "_SOLVED" + m.group(2)
+        case _       ⇒ f + "_SOLVED"
+      }
+
+      new FileWriter(filename)
+    } catch { case e: Exception ⇒ throw e }
+
+    try {
+      out.write(Solver.solveProblem(new File(f).toURI) map { _.outStr } mkString "\n")
+      out.write("\n")
+    } finally {
+      try { out.close() } catch { case _: Exception ⇒ }
+    }
+  }
 }
