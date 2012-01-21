@@ -5,11 +5,12 @@ import org.scalatest.matchers.MustMatchers
 
 trait TestProblem extends MustMatchers { this: WordSpec ⇒
   def testProblem(prob: String, answer: Int) {
-    Solver.solve(Problem(0, prob)) must have('answer (answer))
+    Solver.solve(Problem(0, prob)) must have('answer(answer))
   }
 }
 
 final class Tests extends WordSpec with TestProblem {
+  private val BigTestCount = 1000000
   val word = "HACKERCUP"
 
   "A solver" should {
@@ -38,15 +39,15 @@ final class Tests extends WordSpec with TestProblem {
           "CUP WITH LABEL HACKERCUP BELONGS TO HACKER" -> 2,
           "QUICK CUTE BROWN FOX JUMPS OVER THE LAZY DOG" -> 1,
           "MOVE FAST BE BOLD" -> 0,
-          "HACK THE HACKERCUP" -> 1
-        )
+          "HACK THE HACKERCUP" -> 1)
+
         answers foreach { case (p, a) ⇒ testProblem(p, a) }
       }
     }
 
     "run fast" when {
-      "a large string has no wanted chars" in testProblem("a" * 1000000, 0)
-      "many copies of the word exists" in testProblem(word * 1000000, 1000000)
+      "a large string has no wanted chars" in testProblem("a" * BigTestCount, 0)
+      "many copies of the word exists" in testProblem(word * BigTestCount, BigTestCount)
     }
   }
 }
