@@ -9,7 +9,7 @@ trait TestProblem extends MustMatchers { this: WordSpec ⇒
   }
 }
 
-class Tests extends WordSpec with TestProblem with MustMatchers {
+final class Tests extends WordSpec with TestProblem  {
   val word = "HACKERCUP"
 
   "A solver" should {
