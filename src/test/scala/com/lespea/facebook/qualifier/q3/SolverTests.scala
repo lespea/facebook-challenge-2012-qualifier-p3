@@ -5,11 +5,11 @@ import org.scalatest.matchers.MustMatchers
 
 trait TestProblem extends MustMatchers { this: WordSpec ⇒
   def testProblem(prob: String, answer: Int) {
-    Solver.solve(Problem(0, prob)).answer must equal(answer)
+    Solver.solve(Problem(0, prob)) must have('answer (answer))
   }
 }
 
-final class Tests extends WordSpec with TestProblem  {
+final class Tests extends WordSpec with TestProblem {
   val word = "HACKERCUP"
 
   "A solver" should {
@@ -31,6 +31,17 @@ final class Tests extends WordSpec with TestProblem  {
       "the problem has the right word in the wrong sequence" in testProblem(word.reverse, 1)
 
       "the problem has the right word several times" in testProblem(word + word, 2)
+
+      "the sample problems are run" in {
+        val answers = Map(
+          "WELCOME TO FACEBOOK HACKERCUP" -> 1,
+          "CUP WITH LABEL HACKERCUP BELONGS TO HACKER" -> 2,
+          "QUICK CUTE BROWN FOX JUMPS OVER THE LAZY DOG" -> 1,
+          "MOVE FAST BE BOLD" -> 0,
+          "HACK THE HACKERCUP" -> 1
+        )
+        answers foreach { case (p, a) ⇒ testProblem(p, a) }
+      }
     }
 
     "run fast" when {
