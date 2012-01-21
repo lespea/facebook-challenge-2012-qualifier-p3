@@ -4,7 +4,7 @@ import scala.annotation.switch
 import scala.collection.mutable.HashMap
 
 final object Solver {
-  def solve(p: Problem): Int = {
+  def solve(p: Problem): SolvedProblem = {
     val counts = HashMap[Char, Double]()
 
     p.problem filter {
@@ -21,9 +21,6 @@ final object Solver {
       }
     }
 
-    val answer = if (counts.isEmpty) 0 else counts.values.min.toInt
-    p.answer = Some(answer)
-
-    return answer
+    SolvedProblem(p, if (counts.isEmpty) 0 else counts.values.min.toInt)
   }
 }

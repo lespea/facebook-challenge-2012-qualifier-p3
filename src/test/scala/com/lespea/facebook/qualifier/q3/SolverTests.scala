@@ -5,9 +5,7 @@ import org.scalatest.matchers.MustMatchers
 
 trait TestProblem extends MustMatchers { this: WordSpec ⇒
   def testProblem(prob: String, answer: Int) {
-    val p = Problem(0, prob)
-    Solver.solve(p) must equal(answer)
-    p.answer must equal(Some(answer))
+    Solver.solve(Problem(0, prob)).answer must equal(answer)
   }
 }
 
