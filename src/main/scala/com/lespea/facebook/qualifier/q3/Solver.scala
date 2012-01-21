@@ -4,10 +4,11 @@ import scala.annotation.switch
 import scala.collection.mutable.HashMap
 import scala.io.{ BufferedSource, Source }
 import java.net.URI
+import java.io.File
 
 final object Solver {
   def solveProblem(problemSource: String): Seq[SolvedProblem] =
-    solveProblem(new URI(problemSource))
+    solveProblem(new File(problemSource).toURI)
 
   def solveProblem(uri: URI): Seq[SolvedProblem] =
     getProblems(Source.fromURI(uri)).zipWithIndex.map {
